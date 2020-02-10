@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import org.jetbrains.annotations.NotNull;
 import org.threeten.bp.Instant;
@@ -83,9 +82,9 @@ public class ActionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 	private TempUnit tempUnit;
 	private boolean showDate = true;
 	private boolean showActions = true;
-	private CalendarDay selectedFilterDate = null;
+	private Date selectedFilterDate = null;
 
-	public void setFilterDate(CalendarDay selectedFilterDate)
+	public void setFilterDate(Date selectedFilterDate)
 	{
 		this.selectedFilterDate = selectedFilterDate;
 	}
@@ -270,8 +269,8 @@ public class ActionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 	{
 		if (selectedFilterDate != null)
 		{
-			LocalDate actionDate = CalendarDay.from(LocalDate.from(Instant.ofEpochMilli(actions.get(position).getDate()).atZone(ZoneId.systemDefault()))).getDate();
-			if (!selectedFilterDate.getDate().equals(actionDate)) return 0;
+			Date actionDate = new Date(actions.get(position).getDate());
+			if (!selectedFilterDate.equals(actionDate)) return 0;
 		}
 
 		if (actions.get(position).getClass() == ImageAction.class)
